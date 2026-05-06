@@ -3,9 +3,9 @@
 ## Training Summary
 
 ### Dataset Split
-- **Total Records**: [Update dengan jumlah actual]
-- **Training Set**: 80% ([N] records)
-- **Test Set**: 20% ([N] records)
+- **Total Records**: 250000
+- **Training Set**: 80% (200000 records)
+- **Test Set**: 20% (50000 records)
 - **Train-Test Random State**: 42
 
 ### Model Configuration
@@ -22,66 +22,72 @@
 
 | Metric | Value | Interpretation |
 |--------|-------|-----------------|
-| **MAE** | [Value] | Rata-rata error Rp [Value] |
-| **MSE** | [Value] | Mean squared error |
-| **RMSE** | [Value] | √MSE = Rp [Value] |
-| **MAPE** | [Value]% | Rata-rata error [Value]% |
-| **R² Score** | [Value] | Model menjelaskan [Value]% variance |
+| **MAE** | 5202.27 | Rata-rata error $ 5202.27 |
+| **MSE** | 43175717.67 | Mean squared error |
+| **RMSE** | 6570.82 | Root mean squared error |
+| **MAPE** | 3.77% | Rata-rata error 3.77% |
+| **R² Score** | 0.97 | Model menjelaskan 97% variance |
 
 ### Confidence Interpretation
 - ✓ R² > 0.7: Good model
 - ✓ R² 0.5-0.7: Moderate model
 - ✓ R² < 0.5: Weak model
-- **Our Model**: R² = [Value]
+- **Our Model**: R² = 0.97
 
 ## Error Analysis
 
 ### Error Distribution
 ```
-Mean Error (ME): [Value]
-Median Absolute Error: [Value]
-Std Dev of Errors: [Value]
+Mean Error (ME): 363.42
+Median Absolute Error: 4348.45
+Std Dev of Errors: 6560.77
+Min Error: -36822.32
+Max Error: 33079.07
 ```
 
 ### Error by Salary Range
 
 | Salary Range | Count | MAE | MAPE |
-|--------------|-------|-----|------|
-| < 50M | [N] | [Rp] | [%] |
-| 50M - 100M | [N] | [Rp] | [%] |
-| 100M - 200M | [N] | [Rp] | [%] |
-| > 200M | [N] | [Rp] | [%] |
+|--------------|-------|----------------|---------|
+| < 100k | 5253 | 4928.48 | 5.87% |
+| 100k - 150k | 23193 | 4921.73 | 3.91% |
+| 150k - 200k | 17520 | 5349.44 | 3.14% |
+| > 200k | 4034 | 6532.55 | 2.96% |
 
-**Insight**: Model performa berbeda pada range salary yang berbeda
+**Insight**: Model error bervariasi menurut kisaran gaji. Error absolut cenderung sedikit meningkat pada gaji lebih tinggi, tetapi persentase error (MAPE) berkurang pada rentang >200k karena nilai dasar yang lebih besar.
 
 ## Feature Importance
 
-### Top 10 Most Important Features
+### Top Features
 
 ```
-1. experience          [████████] 35.2%
-2. job_title           [██████] 22.1%
-3. education           [████] 15.8%
-4. age                 [████] 14.3%
-5. remote_status       [██] 8.6%
-6. location            [█] 4.0%
-...
+1. location           35.14%
+2. experience_years   19.61%
+3. job_title          15.91%
+4. company_size       15.08%
+5. education_level     9.35%
+6. skills_count        2.60%
+7. certifications      1.00%
+8. industry            0.73%
+9. remote_work         0.57%
 ```
 
 ### Feature Importance Insights
-- **experience** is the strongest predictor of salary
-- **job_title** and **education** are also significant
-- **remote_status** has minor impact
-- Consider removing low-importance features untuk simplify model
+- **Lokasi pekerjaan** (`location`) adalah faktor paling dominan, menunjukkan bahwa regionalisasi gaji sangat kuat dalam dataset ini.
+- **Pengalaman kerja** (`experience_years`) adalah predictor kedua terkuat, sejalan dengan ekspektasi bahwa pengalaman meningkatkan gaji.
+- **Job title** dan **company size** juga memiliki kontribusi besar, menandakan bahwa jabatan dan ukuran perusahaan mempengaruhi skala kompensasi.
+- **Education level** tetap penting, tetapi dampaknya lebih kecil dibandingkan faktor pengalaman dan lokasi.
+- Fitur seperti `skills_count`, `certifications`, `industry`, dan `remote_work` memiliki pengaruh lebih kecil; ini bisa menjadi kandidat untuk simplifikasi model jika diperlukan.
+- Kesimpulan: model lebih sensitif terhadap konteks pekerjaan (lokasi, jabatan, ukuran perusahaan, pengalaman) daripada atribut tambahan yang lebih detil.
 
 ## Residual Analysis
 
 ### Residual Statistics
 ```
-Mean of Residuals: ~0 (good)
-Std Dev: [Value]
-Min Residual: [Value]
-Max Residual: [Value]
+Mean of Residuals: 363.42
+Std Dev: 6560.77
+Min Residual: -36822.32
+Max Residual: 33079.07
 ```
 
 ### Residual Patterns

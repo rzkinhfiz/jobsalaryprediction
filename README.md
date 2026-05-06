@@ -76,7 +76,7 @@ The notebook includes:
 - ✅ Train-test split & scaling
 - ✅ Random Forest model training
 - ✅ Feature importance analysis
-- ✅ Model evaluation (MAE, MAPE, R²)
+- ✅ Model evaluation (MAE, MSE, RMSE, MAPE, R²)
 - ✅ Residual analysis plots
 - ✅ Model persistence
 
@@ -102,9 +102,11 @@ salary = np.expm1(y_pred_log)
 
 | Metric | Value |
 |--------|-------|
-| MAE | [Update with actual] |
-| MAPE | [Update with actual]% |
-| R² Score | [Update with actual] |
+| MAE | 5202.27 |
+| MSE | 43175717.67 |
+| RMSE | 6570.82 |
+| MAPE | 3.77% |
+| R² Score | 0.97 |
 
 **Full results**: See [docs/RESULTS.md](docs/RESULTS.md)
 
