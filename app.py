@@ -1,9 +1,3 @@
-import sys
-import os
-
-# Menambahkan root directory proyek ke dalam python path
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
-
 import streamlit as st
 import numpy as np
 import pandas as pd
