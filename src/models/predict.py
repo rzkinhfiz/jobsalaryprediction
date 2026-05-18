@@ -44,7 +44,8 @@ def preprocess_input(raw_input: Dict[str, object], artifacts: Dict[str, object])
 
     input_df[numeric_cols] = input_df[numeric_cols].astype(float)
     scaled_columns = config["features"]["scaled_columns"]
-    input_df[scaled_columns] = artifacts["feature_scaler"].transform(input_df[scaled_columns])
+    scaled_values = artifacts["feature_scaler"].transform(input_df[scaled_columns])
+    input_df.loc[:, scaled_columns] = scaled_values
 
     ordered_columns = categorical_cols + numeric_cols
     return input_df[ordered_columns]
