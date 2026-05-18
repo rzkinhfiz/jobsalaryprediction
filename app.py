@@ -231,7 +231,7 @@ def plot_feature_importance(artifacts: dict) -> None:
     ax.tick_params(colors="#e2e8f0")
     ax.spines["bottom"].set_color("#cbd5e1")
     ax.spines["left"].set_color("#cbd5e1")
-    ax.grid(axis="x", color="rgba(255,255,255,0.1)")
+    ax.grid(axis="x", color=(1.0, 1.0, 1.0, 0.08))
     fig.patch.set_facecolor("none")
     ax.set_facecolor("none")
     st.pyplot(fig)
