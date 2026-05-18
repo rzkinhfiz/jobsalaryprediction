@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import plotly.express as px
 
 from src.models.predict import load_artifacts, predict_salary
 
@@ -223,23 +222,19 @@ def plot_feature_importance(artifacts: dict) -> None:
 
     importance_df = pd.DataFrame({"feature": feature_names, "importance": importance})
     importance_df = importance_df.sort_values("importance", ascending=True)
-    fig = px.bar(
-        importance_df,
-        x="importance",
-        y="feature",
-        orientation="h",
-        color="importance",
-        color_continuous_scale="turbo",
-        labels={"importance": "Importance", "feature": "Feature"},
-    )
-    fig.update_layout(
-        plot_bgcolor="rgba(0,0,0,0)",
-        paper_bgcolor="rgba(0,0,0,0)",
-        font_color="#f8fafc",
-        margin=dict(l=0, r=0, t=30, b=0),
-        coloraxis_showscale=False,
-    )
-    st.plotly_chart(fig, use_container_width=True)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    sns.barplot(x="importance", y="feature", data=importance_df, palette="viridis", ax=ax)
+    ax.set_title("Feature Importance", color="#f8fafc")
+    ax.set_xlabel("Importance", color="#e2e8f0")
+    ax.set_ylabel("")
+    ax.tick_params(colors="#e2e8f0")
+    ax.spines["bottom"].set_color("#cbd5e1")
+    ax.spines["left"].set_color("#cbd5e1")
+    ax.grid(axis="x", color="rgba(255,255,255,0.1)")
+    fig.patch.set_facecolor("none")
+    ax.set_facecolor("none")
+    st.pyplot(fig)
 
 
 def render_sidebar() -> bool:
