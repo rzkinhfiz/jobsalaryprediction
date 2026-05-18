@@ -214,11 +214,15 @@ def plot_salary_distribution(salary_series: pd.Series, prediction: float) -> Non
 def plot_feature_importance(artifacts: dict) -> None:
     config = artifacts["config"]
     model = artifacts["model"]
-    feature_names = config["features"]["categorical_columns"] + config["features"]["numeric_columns"]
     importance = getattr(model, "feature_importances_", None)
     if importance is None:
         st.warning("Model tidak memiliki atribut feature_importances_.")
         return
+
+    if hasattr(model, "feature_names_in_"):
+        feature_names = list(model.feature_names_in_)
+    else:
+        feature_names = config["features"]["scaled_columns"]
 
     importance_df = pd.DataFrame({"feature": feature_names, "importance": importance})
     importance_df = importance_df.sort_values("importance", ascending=True)
