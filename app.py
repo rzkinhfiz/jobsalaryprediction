@@ -269,7 +269,7 @@ def render_main() -> None:
     inject_glassmorphism_css()
 
     st.markdown("# Job Salary Prediction")
-    st.markdown("Aplikasi ini memprediksi gaji berdasarkan deskripsi pekerjaan dan profil profesional dengan tema Glassmorphism Dashboard.")
+    st.markdown("Aplikasi ini memprediksi gaji berdasarkan deskripsi pekerjaan dan profil.")
 
     advanced_mode = render_sidebar()
     artifacts = None
