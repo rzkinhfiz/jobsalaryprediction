@@ -3,7 +3,7 @@
 ## Load Trained Model and Artifacts
 
 ```python
-from src.models.predict import load_artifacts
+from src.models.predict import load_artifacts, predict_salary
 
 artifacts = load_artifacts('config/config.json')
 ```
@@ -50,6 +50,20 @@ for _, row in batch_df.iterrows():
 batch_df['predicted_salary'] = results
 batch_df.to_csv('data/predictions_results.csv', index=False)
 ```
+
+## Streamlit App
+
+The repository includes a Streamlit app for interactive salary prediction and model insights:
+
+```bash
+streamlit run app.py
+```
+
+Live deployment: https://jobsalaryprediction-rzkinhfizproject.streamlit.app/
+
+## Notebook Reference
+
+Use `notebooks/job_salary_prediction.ipynb` for the end-to-end training, evaluation, and artifact persistence workflow.
 
 ## Direct Artifact Loading
 

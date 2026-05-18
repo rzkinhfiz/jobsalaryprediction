@@ -11,6 +11,8 @@ A machine learning project to predict job salaries based on various features suc
 - **Evaluation Metrics**: MAE, MSE, MAPE, R²
 - **Features**: Feature importance analysis, residual diagnostics
 
+**Live Demo**: https://jobsalaryprediction-rzkinhfizproject.streamlit.app/
+
 **Status**: ✅ Model trained and evaluated
 
 ## 📁 Project Structure
@@ -31,8 +33,8 @@ dsproject_jobsalarypredict/
 │   └── job_salary_prediction.ipynb  # Main notebook (EDA, training, evaluation)
 ├── models/
 │   ├── random_forest_salary_model.pkl    # Trained model
-│   ├── scaler.pkl                        # StandardScaler
-│   └── le_*.pkl                          # Label encoders
+│   ├── feature_scaler.pkl                # StandardScaler artifact
+│   └── label_encoders.pkl                # Label encoders
 ├── src/
 │   ├── models/                      # Model training/prediction scripts
 │   ├── features/                    # Feature engineering
@@ -64,9 +66,14 @@ pip install -r requirements.txt
 
 **Detailed setup**: See [docs/SETUP.md](docs/SETUP.md)
 
-### 2. Run Notebook
+### 2. Run Notebook or Launch App
 ```bash
 jupyter notebook notebooks/job_salary_prediction.ipynb
+```
+
+Or run the Streamlit app:
+```bash
+streamlit run app.py
 ```
 
 The notebook includes:
@@ -82,18 +89,23 @@ The notebook includes:
 
 ### 3. Make Predictions
 ```python
-import joblib
-import numpy as np
+from src.models.predict import load_artifacts, predict_salary
 
-# Load model
-model = joblib.load('models/random_forest_salary_model.pkl')
-scaler = joblib.load('models/scaler.pkl')
+artifacts = load_artifacts('config/config.json')
+raw_input = {
+    'job_title': 'Data Scientist',
+    'education_level': 'Master',
+    'industry': 'Technology',
+    'company_size': 'Large',
+    'location': 'USA',
+    'remote_work': 'Yes',
+    'experience_years': 5,
+    'skills_count': 6,
+    'certifications': 2,
+}
 
-# Prepare features and predict
-X_new = preprocess_features(new_data)
-X_new_scaled = scaler.transform(X_new)
-y_pred_log = model.predict(X_new_scaled)
-salary = np.expm1(y_pred_log)
+salary_prediction = predict_salary(raw_input, artifacts)[0]
+print(f"Prediksi gaji: Rp {salary_prediction:,.0f}")
 ```
 
 **Detailed usage**: See [docs/USAGE.md](docs/USAGE.md)
@@ -158,7 +170,7 @@ Results (MAE, MAPE, R²) → Feature Importance → Residual Plot
 
 ## 📋 Next Steps
 
-1. **Update placeholder values** in `docs/RESULTS.md` with actual model metrics
+1. **Review model metrics** and verify them against notebook results
 2. **Customize features** based on your dataset (e.g., rename columns)
 3. **Hyperparameter tuning** for model improvement
 4. **Deploy model** as REST API (FastAPI/Flask)
@@ -186,14 +198,18 @@ To contribute:
 
 ## 📄 License
 
-[Specify your license here]
+Created by Rizki Nurhafizd Achmad
 
 ## 📧 Contact
 
-[Add contact information if applicable]
+| Platform | Tautan |
+| :--- | :--- |
+| **LinkedIn** | [@rzkinhfiz](https://linkedin.com/in/rzkinhfiz) |
+| **GitHub** | [@rzkinhfiz](https://github.com/rzkinhfiz) |
+| **Web Portfolio** | [My Website](https://v0-rzkinhfiz-porto.vercel.app/) |
 
 ---
 
-**Last Updated**: May 6, 2026  
+**Last Updated**: May 18, 2026  
 **Model Version**: v1.0  
 **Status**: Production Ready

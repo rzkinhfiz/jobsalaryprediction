@@ -1,5 +1,7 @@
 # Model Documentation
 
+Live demo: https://jobsalaryprediction-rzkinhfizproject.streamlit.app/
+
 ## Overview
 Model ini menggunakan **Random Forest Regressor** untuk memprediksi `salary` berdasarkan fitur pekerjaan dan perusahaan. Target `salary` ditransformasikan menjadi `salary_log` dengan `np.log1p()` untuk mengurangi skewness pada distribusi.
 

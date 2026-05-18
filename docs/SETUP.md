@@ -33,6 +33,17 @@ conda activate jobsalary
 pip install -r requirements.txt
 ```
 
+If you want to run the Streamlit app, install Streamlit as well:
+```bash
+pip install streamlit
+```
+
+## Step 4: Launch the Streamlit App
+
+```bash
+streamlit run app.py
+```
+
 ### Key Libraries Installed
 - **pandas**: Data manipulation
 - **numpy**: Numerical computing
@@ -43,7 +54,7 @@ pip install -r requirements.txt
 - **joblib**: Model serialization
 - **pytest**: Unit testing
 
-## Step 4: Verify Installation
+## Step 5: Verify Installation
 
 ```bash
 python --version
@@ -67,7 +78,7 @@ python -c "import pandas, sklearn, numpy, joblib; print('All packages imported s
 ## Step 6: Run the Notebook
 
 ```bash
-jupyter notebook
+jupyter notebook notebooks/job_salary_prediction.ipynb
 ```
 
 Open the notebook at `notebooks/job_salary_prediction.ipynb`.

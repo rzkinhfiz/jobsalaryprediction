@@ -4,6 +4,8 @@
 
 **Job Salary Prediction** adalah project machine learning yang memprediksi gaji pekerjaan berdasarkan fitur pekerjaan dan konteks perusahaan. Proyek ini menggunakan **Random Forest Regressor** dengan preprocessing yang mencakup log-transformasi target, LabelEncoder untuk fitur kategorikal, dan StandardScaler untuk fitur input.
 
+Notebook utama tersedia di `notebooks/job_salary_prediction.ipynb`.
+
 ## Folder Structure
 
 ```
@@ -78,6 +80,11 @@ dsproject_jobsalarypredict/
 4. Scale semua fitur input dengan `feature_scaler`
 5. Prediksi `y_pred_log`
 6. Konversi hasil ke skala asli dengan `np.expm1()`
+
+## Deployment
+
+- Streamlit app entrypoint: `app.py`
+- Live deployment: https://jobsalaryprediction-rzkinhfizproject.streamlit.app/
 
 ## Configuration
 
