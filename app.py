@@ -229,15 +229,30 @@ def plot_feature_importance(artifacts: dict) -> None:
 
     fig, ax = plt.subplots(figsize=(10, 5))
     sns.barplot(x="importance", y="feature", data=importance_df, palette="viridis", ax=ax)
-    ax.set_title("Feature Importance", color="#f8fafc")
-    ax.set_xlabel("Importance", color="#e2e8f0")
-    ax.set_ylabel("")
-    ax.tick_params(colors="#e2e8f0")
+    ax.set_title("Feature Importance", color="#f8fafc", fontsize=18, pad=16)
+    ax.set_xlabel("Importance", color="#e2e8f0", fontsize=14)
+    ax.set_ylabel("", fontsize=14)
+    ax.tick_params(axis="x", colors="#e2e8f0", labelsize=12)
+    ax.tick_params(axis="y", colors="#f8fafc", labelsize=12)
+    for label in ax.get_yticklabels():
+        label.set_fontweight("semibold")
     ax.spines["bottom"].set_color("#cbd5e1")
     ax.spines["left"].set_color("#cbd5e1")
     ax.grid(axis="x", color=(1.0, 1.0, 1.0, 0.08))
+    ax.set_axisbelow(True)
     fig.patch.set_facecolor("none")
     ax.set_facecolor("none")
+    for bar in ax.patches:
+        width = bar.get_width()
+        ax.text(
+            width + width * 0.01,
+            bar.get_y() + bar.get_height() / 2,
+            f"{width:.3f}",
+            va="center",
+            ha="left",
+            color="#e2e8f0",
+            fontsize=10,
+        )
     st.pyplot(fig)
 
 
