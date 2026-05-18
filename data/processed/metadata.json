@@ -1,0 +1,24 @@
+{
+  "train_size": 200000,
+  "test_size": 50000,
+  "test_size_ratio": 0.2,
+  "n_features": 9,
+  "feature_names": [
+    "job_title",
+    "experience_years",
+    "education_level",
+    "skills_count",
+    "industry",
+    "company_size",
+    "location",
+    "remote_work",
+    "certifications"
+  ],
+  "random_state": 42,
+  "preprocessing": {
+    "target_transform": "log1p (salary)",
+    "categorical_encoding": "LabelEncoder",
+    "numeric_scaling": "StandardScaler",
+    "scaling_fit_on": "training_data_only"
+  }
+}

@@ -138,7 +138,7 @@ def load_market_data() -> pd.DataFrame:
 
 
 def format_currency(value: float) -> str:
-    return f"Rp {value:,.0f}"
+    return f"$ {value:,.0f}"
 
 
 def build_input_panel(advanced_mode: bool) -> dict:
