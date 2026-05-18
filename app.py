@@ -202,12 +202,12 @@ def plot_salary_distribution(salary_series: pd.Series, prediction: float) -> Non
     fig, ax = plt.subplots(figsize=(10, 4))
     sns.histplot(salary_series, bins=40, kde=True, color="#7c3aed", alpha=0.5, ax=ax)
     ax.axvline(prediction, color="#ff3864", linewidth=3, linestyle="--")
-    ax.set_title("Market Salary Distribution", color="#f8fafc")
-    ax.set_xlabel("Salary (IDR)", color="#0a0d10")
-    ax.set_ylabel("Count", color="#0a0f15")
-    ax.tick_params(colors="#e2e8f0")
-    ax.spines["bottom"].set_color("#cbd5e1")
-    ax.spines["left"].set_color("#cbd5e1")
+    ax.set_title("Market Salary Distribution", color="#000000")
+    ax.set_xlabel("Salary (IDR)", color="#000000")
+    ax.set_ylabel("Count", color="#000000")
+    ax.tick_params(colors="#000000")
+    ax.spines["bottom"].set_color("#000000")
+    ax.spines["left"].set_color("#000000")
     st.pyplot(fig)
 
 
