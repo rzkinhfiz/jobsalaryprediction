@@ -22,7 +22,7 @@
 
 | Column | Type | Range | Description |
 |--------|------|-------|-------------|
-| `salary` | Integer | 31.867 - 333.046 | Gaji pekerjaan dalam ribuan unit mata uang (misalnya Rp 31.867 sampai Rp 333.046) |
+| `salary` | Integer | 31.867 - 333.046 | Gaji pekerjaan dalam ribuan unit mata uang (misalnya $ 31.867 sampai $ 333.046) |
 
 ### Input Features
 

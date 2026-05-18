@@ -30,7 +30,7 @@ raw_input = {
 }
 
 salary_prediction = predict_salary(raw_input, artifacts)[0]
-print(f"Prediksi gaji: Rp {salary_prediction:,.0f}")
+print(f"Prediksi gaji: $ {salary_prediction:,.0f}")
 ```
 
 ## Batch Predictions
@@ -63,7 +63,7 @@ Live deployment: https://jobsalaryprediction-rzkinhfizproject.streamlit.app/
 
 ## Notebook Reference
 
-Use `notebooks/job_salary_prediction.ipynb` for the end-to-end training, evaluation, and artifact persistence workflow.
+Use `notebooks/job_salary_prediction.ipynb` for the end-to-end training, evaluation, and artifact persistence workflow. The notebook loads raw data, drops missing values, encodes categorical features with `LabelEncoder`, applies `np.log1p` to `salary`, and saves processed CSV files under `data/processed/`.
 
 ## Direct Artifact Loading
 
@@ -120,7 +120,7 @@ for col, encoder in encoders.items():
 input_scaled = feature_scaler.transform(input_df)
 y_pred_log = model.predict(input_scaled)
 salary = np.expm1(y_pred_log)[0]
-print(f"Prediksi gaji: Rp {salary:,.0f}")
+print(f"Prediksi gaji: $ {salary:,.0f}")
 ```
 
 ## Notes

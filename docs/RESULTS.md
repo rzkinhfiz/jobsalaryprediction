@@ -12,8 +12,9 @@ Live demo: https://jobsalaryprediction-rzkinhfizproject.streamlit.app/
 
 ### Model Configuration
 - **Algorithm**: Random Forest Regressor
-- **n_estimators**: 100
-- **max_depth**: None
+- **n_estimators**: 50
+- **max_depth**: 20
+- **min_samples_leaf**: 5
 - **random_state**: 42
 
 ## Performance Metrics
@@ -22,13 +23,13 @@ Live demo: https://jobsalaryprediction-rzkinhfizproject.streamlit.app/
 
 | Metric | Value |
 |--------|-------|
-| **MAE** | 5202.27 |
-| **MSE** | 43175717.67 |
-| **RMSE** | 6570.82 |
-| **MAPE** | 3.77% |
-| **R² Score** | 0.97 |
+| MAE | 5462.14 |
+| MSE | 47893565.64 |
+| RMSE | 6920.52 |
+| MAPE | 3.94% |
+| R² Score | 0.97 |
 
-**Interpretation**: Model berhasil memprediksi gaji dengan kesalahan rata-rata di bawah Rp 6.000 dan tingkat akurasi sangat tinggi pada dataset ini.
+**Interpretation**: Model berhasil memprediksi gaji dengan kesalahan rata-rata di bawah $ 7.000 dan tingkat akurasi sangat tinggi pada dataset ini.
 
 ## Error Analysis
 

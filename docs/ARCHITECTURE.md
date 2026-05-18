@@ -55,14 +55,15 @@ dsproject_jobsalarypredict/
 
 1. Load raw data dari `data/raw/job_salary_prediction_dataset.csv`
 2. Lakukan EDA untuk memahami distribusi, korelasi, dan kualitas data
-3. Preprocess data:
-   - log-transform target `salary`
-   - encode kategori dengan `LabelEncoder`
+3. Clean data dengan `df.dropna()` untuk menghapus missing values
+4. Preprocess data:
+   - log-transform target `salary` menjadi `salary_log`
+   - encode semua kolom kategorikal dengan `LabelEncoder`
    - split train/test 80/20
    - scale semua fitur menggunakan `StandardScaler`
-4. Train model Random Forest
-5. Evaluate model dengan MAE, MSE, RMSE, MAPE, dan R²
-6. Save artifacts model, scaler, dan encoders
+5. Train model Random Forest dengan `n_estimators=50`, `max_depth=20`, `min_samples_leaf=5`
+6. Evaluate model dengan MAE, MSE, RMSE, MAPE, dan R²
+7. Save processed datasets, metadata, model, scaler, dan encoders
 
 ## Code Layers
 

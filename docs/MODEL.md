@@ -10,7 +10,9 @@ Model ini menggunakan **Random Forest Regressor** untuk memprediksi `salary` ber
 ### Algorithm: Random Forest Regressor
 - **Type**: Ensemble learning
 - **Base estimators**: Decision trees
-- **n_estimators**: 100
+- **n_estimators**: 50
+- **max_depth**: 20
+- **min_samples_leaf**: 5
 - **random_state**: 42
 - **Objective**: Regression
 
@@ -55,8 +57,11 @@ df['salary_log'] = np.log1p(df['salary'])
 from sklearn.ensemble import RandomForestRegressor
 
 model = RandomForestRegressor(
-    n_estimators=100,
-    random_state=42
+    n_estimators=50,
+    max_depth=20,
+    min_samples_leaf=5,
+    random_state=42,
+    n_jobs=-1
 )
 model.fit(X_train_scaled, y_train)
 ```

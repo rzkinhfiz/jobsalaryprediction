@@ -7,7 +7,9 @@ A machine learning project to predict job salaries based on various features suc
 **Goal**: Build an accurate salary prediction model using job-related features.
 
 **Model**: Random Forest Regressor with log-transformed salary target
-- **n_estimators**: 100 trees
+- **n_estimators**: 50 trees
+- **max_depth**: 20
+- **min_samples_leaf**: 5
 - **Evaluation Metrics**: MAE, MSE, MAPE, R²
 - **Features**: Feature importance analysis, residual diagnostics
 
@@ -114,10 +116,10 @@ print(f"Prediksi gaji: Rp {salary_prediction:,.0f}")
 
 | Metric | Value |
 |--------|-------|
-| MAE | 5202.27 |
-| MSE | 43175717.67 |
-| RMSE | 6570.82 |
-| MAPE | 3.77% |
+| MAE | 5462.14 |
+| MSE | 47893565.64 |
+| RMSE | 6920.52 |
+| MAPE | 3.94% |
 | R² Score | 0.97 |
 
 **Full results**: See [docs/RESULTS.md](docs/RESULTS.md)
@@ -204,12 +206,12 @@ Created by Rizki Nurhafizd Achmad
 
 | Platform | Tautan |
 | :--- | :--- |
-| **LinkedIn** | [@rzkinhfiz](https://linkedin.com/in/rzkinhfiz) |
+| **LinkedIn** | [rizki-nurhafizd](https://www.linkedin.com/in/rizki-nurhafizd/) |
 | **GitHub** | [@rzkinhfiz](https://github.com/rzkinhfiz) |
 | **Web Portfolio** | [My Website](https://v0-rzkinhfiz-porto.vercel.app/) |
 
 ---
 
 **Last Updated**: May 18, 2026  
-**Model Version**: v1.0  
+**Model Version**: v2.0  
 **Status**: Production Ready
