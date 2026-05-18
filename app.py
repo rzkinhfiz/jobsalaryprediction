@@ -203,8 +203,8 @@ def plot_salary_distribution(salary_series: pd.Series, prediction: float) -> Non
     sns.histplot(salary_series, bins=40, kde=True, color="#7c3aed", alpha=0.5, ax=ax)
     ax.axvline(prediction, color="#ff3864", linewidth=3, linestyle="--")
     ax.set_title("Market Salary Distribution", color="#f8fafc")
-    ax.set_xlabel("Salary (IDR)", color="#e2e8f0")
-    ax.set_ylabel("Count", color="#e2e8f0")
+    ax.set_xlabel("Salary (IDR)", color="#0a0d10")
+    ax.set_ylabel("Count", color="#0a0f15")
     ax.tick_params(colors="#e2e8f0")
     ax.spines["bottom"].set_color("#cbd5e1")
     ax.spines["left"].set_color("#cbd5e1")
@@ -237,7 +237,7 @@ def plot_feature_importance(artifacts: dict) -> None:
     for label in ax.get_yticklabels():
         label.set_fontweight("semibold")
     ax.spines["bottom"].set_color("#03080F")
-    ax.spines["left"].set_color("#03080F")
+    ax.spines["left"].set_color("#cbd5e1")
     ax.grid(axis="x", color=(1.0, 1.0, 1.0, 0.08))
     ax.set_axisbelow(True)
     fig.patch.set_facecolor("none")
@@ -250,7 +250,7 @@ def plot_feature_importance(artifacts: dict) -> None:
             f"{width:.3f}",
             va="center",
             ha="left",
-            color="#08111d",
+            color="#e2e8f0",
             fontsize=10,
         )
     st.pyplot(fig)
