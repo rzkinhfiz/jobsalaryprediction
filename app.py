@@ -236,8 +236,8 @@ def plot_feature_importance(artifacts: dict) -> None:
     ax.tick_params(axis="y", colors="#f8fafc", labelsize=12)
     for label in ax.get_yticklabels():
         label.set_fontweight("semibold")
-    ax.spines["bottom"].set_color("#cbd5e1")
-    ax.spines["left"].set_color("#cbd5e1")
+    ax.spines["bottom"].set_color("#03080F")
+    ax.spines["left"].set_color("#03080F")
     ax.grid(axis="x", color=(1.0, 1.0, 1.0, 0.08))
     ax.set_axisbelow(True)
     fig.patch.set_facecolor("none")
@@ -250,7 +250,7 @@ def plot_feature_importance(artifacts: dict) -> None:
             f"{width:.3f}",
             va="center",
             ha="left",
-            color="#e2e8f0",
+            color="#08111d",
             fontsize=10,
         )
     st.pyplot(fig)
