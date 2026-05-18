@@ -21,6 +21,6 @@
     "log_target_column": "salary_log",
     "numeric_columns": ["experience_years", "skills_count", "certifications"],
     "categorical_columns": ["job_title", "education_level", "industry", "company_size", "location", "remote_work"],
-    "scaled_columns": ["job_title", "education_level", "industry", "company_size", "location", "remote_work", "experience_years", "skills_count", "certifications"]
+    "scaled_columns": ["job_title", "experience_years", "education_level", "skills_count", "industry", "company_size", "location", "remote_work", "certifications"]
   }
 }
