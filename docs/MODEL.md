@@ -1,46 +1,51 @@
 # Model Documentation
 
 ## Overview
-Model prediksi gaji pekerjaan menggunakan algoritma **Random Forest Regressor** dengan log transformation pada target variable untuk menangani distribusi yang skewed.
+Model ini menggunakan **Random Forest Regressor** untuk memprediksi `salary` berdasarkan fitur pekerjaan dan perusahaan. Target `salary` ditransformasikan menjadi `salary_log` dengan `np.log1p()` untuk mengurangi skewness pada distribusi.
 
 ## Model Architecture
 
 ### Algorithm: Random Forest Regressor
-- **Type**: Ensemble learning method
+- **Type**: Ensemble learning
 - **Base estimators**: Decision trees
-- **Number of trees**: 100
-- **Random state**: 42 (untuk reproducibility)
-- **Objective**: Regression - memprediksi nilai gaji secara kontinyu
+- **n_estimators**: 100
+- **random_state**: 42
+- **Objective**: Regression
 
 ### Why Random Forest?
-- Robust terhadap outliers
-- Menangani non-linear relationships
-- Feature importance built-in
-- Tidak memerlukan feature scaling (tree-based model)
-- Good generalization capability
+- Menangani hubungan non-linear antara fitur dan target
+- Tahan terhadap outlier pada fitur dan target
+- Memberikan feature importance
+- Cocok untuk dataset campuran numeric dan encoded categorical
 
-## Data Preprocessing Pipeline
+## Data Preprocessing
 
 ### 1. Log Transformation
 ```python
 df['salary_log'] = np.log1p(df['salary'])
 ```
-**Alasan**: Mengatasi skewness pada distribusi gaji agar lebih normal
+- Mengurangi skewness pada distribusi gaji
+- Membuat target lebih stabil untuk regresi
 
 ### 2. Categorical Encoding
-- Menggunakan `LabelEncoder` untuk mengkonversi categorical features ke numeric
-- Features yang dienkode: `job_title`, `education`, `remote_status`, dll
+- Menggunakan `LabelEncoder` untuk setiap kolom kategorikal
+- Kolom yang dienkode:
+  - `job_title`
+  - `education_level`
+  - `industry`
+  - `company_size`
+  - `location`
+  - `remote_work`
 
-### 3. Feature Scaling (StandardScaler)
-- Fitur numeric di-scale ke mean=0, std=1
-- **Penting**: Scaling dilakukan SETELAH train/test split
-- Training set: `fit_transform()`
-- Test set: `transform()` (menggunakan statistics dari training set)
+### 3. Feature Scaling
+- Semua fitur input diskalakan dengan `StandardScaler`
+- Scaling dilakukan setelah train/test split
+- `feature_scaler` disimpan untuk inference produksi
 
 ### 4. Train-Test Split
-- **Test size**: 20% (default)
-- **Random state**: 42
-- **Urutan**: Split → Scale → Train
+- `test_size`: 0.2
+- `random_state`: 42
+- Urutan: split → encode → scale → train
 
 ## Model Training
 
@@ -51,72 +56,56 @@ model = RandomForestRegressor(
     n_estimators=100,
     random_state=42
 )
-
 model.fit(X_train_scaled, y_train)
 ```
 
-**Features yang digunakan**:
-- Semua features setelah preprocessing kecuali target variable
+### Input Features
+- Semua fitur pada `X` setelah preprocessing
+- Target yang dilatih: `salary_log`
 
 ## Model Evaluation
 
 ### Metrics
+| Metric | Description |
+|--------|-------------|
+| MAE | Mean Absolute Error |
+| MSE | Mean Squared Error |
+| RMSE | Root Mean Squared Error |
+| MAPE | Mean Absolute Percentage Error |
+| R² | Explained variance score |
 
-| Metric | Formula | Interpretasi |
-|--------|---------|--------------|
-| **MAE** | $\frac{1}{n}\sum\|y_{true} - y_{pred}\|$ | Rata-rata error absolut dalam rupiah |
-| **MSE** | $\frac{1}{n}\sum(y_{true} - y_{pred})^2$ | Penalti untuk error besar |
-| **RMSE** | $\sqrt{MSE}$ | Root mean squared error |
-| **MAPE** | $\frac{1}{n}\sum\|\frac{y_{true} - y_{pred}}{y_{true}}\| \times 100\%$ | Error dalam persentase |
-| **R² Score** | $1 - \frac{SS_{res}}{SS_{tot}}$ | Proporsi variance yang dijelaskan (0-1) |
-
-### Prediction Process
-1. Input features di-scale menggunakan scaler yang telah dilatih
-2. Model memprediksi di log scale
-3. Back-transform menggunakan `np.expm1()` ke skala asli
-
-## Model Artifacts
-
-### Saved Model
-- **File**: `models/random_forest_salary_model.pkl`
-- **Format**: Joblib (pickle)
-- **Size**: Bergantung pada jumlah features
-- **Load**: `joblib.load('models/random_forest_salary_model.pkl')`
-
-### Additional Artifacts
-- Scaler object untuk normalisasi features
-- Label encoders untuk categorical variables
-- Feature names untuk reference
-
-## Performance Considerations
-
-### Strengths
-✓ Interpretable melalui feature importance  
-✓ Robust terhadap outliers dan missing values  
-✓ Tidak memerlukan feature normalization untuk prediction  
-✓ Fast inference time  
-
-### Limitations
-✗ Dapat overfit pada training data  
-✗ Boros memory untuk dataset besar  
-✗ Tidak optimal untuk extrapolation di luar training range  
-
-## Hyperparameter Tuning (Optional)
-
-Untuk meningkatkan performa, Anda dapat tuning:
-
+### Prediction Flow
+1. Preprocess input dengan label encoders
+2. Scale fitur menggunakan `feature_scaler`
+3. Prediksi `y_pred_log`
+4. Back-transform ke nilai asli:
 ```python
-# Grid search example
-param_grid = {
-    'n_estimators': [50, 100, 200],
-    'max_depth': [10, 20, None],
-    'min_samples_split': [2, 5, 10],
-    'min_samples_leaf': [1, 2, 4]
-}
+salary = np.expm1(y_pred_log)
 ```
 
-## Monitoring & Maintenance
+## Saved Artifacts
 
-- **Retraining**: Lakukan ketika ada data baru yang signifikan
-- **Validation**: Monitor prediction errors secara periodik
-- **Data Drift**: Cek apakah distribution data input berubah
+- `models/random_forest_salary_model.pkl`
+- `models/feature_scaler.pkl`
+- `models/label_encoders.pkl`
+
+## Practical Notes
+
+- `RandomForestRegressor` sering kali tidak memerlukan scaling, tetapi di sini scaling diterapkan untuk menjaga konsistensi numerik dan inference yang stabil.
+- Label encoders disimpan agar model inference menggunakan representasi kategori yang sama seperti saat training.
+- Bergantung pada deployment, persiapkan strategi untuk menangani kategori baru yang tidak dikenal.
+
+## Strengths
+- Interpretasi feature importance
+- Robust terhadap outlier
+- Prediksi non-linear
+
+## Limitations
+- Model ukuran bisa cukup besar
+- Perlu perhatian pada kategori baru saat inference
+- Tidak baik untuk prediksi di luar rentang data training
+
+## Maintenance
+- Simpan dan versi artifact model
+- Monitor error dan drift data
+- Retrain model saat data baru tersedia

@@ -3,8 +3,18 @@
 ## Dataset Overview
 - **Source**: `data/raw/job_salary_prediction_dataset.csv`
 - **Format**: CSV
-- **Rows**: [Bergantung pada dataset Anda]
-- **Columns**: [Daftar di bawah]
+- **Rows**: 250000
+- **Columns**: 10
+- **Missing values**: 0 di semua kolom
+
+## Dataset Summary
+- **Target**: `salary`
+- **Feature types**: 6 categorical, 4 numeric
+- **Salary range**: 31.867 - 333.046
+- **Salary mean**: 145.718
+- **Salary median**: 143.453
+- **Salary std**: 37.408
+- **Salary distribution**: skewed positif, log transform digunakan untuk stabilisasi
 
 ## Feature Descriptions
 
@@ -12,85 +22,126 @@
 
 | Column | Type | Range | Description |
 |--------|------|-------|-------------|
-| `salary` | Numeric (float/int) | [Min-Max] | Gaji pekerjaan dalam rupiah atau mata uang lokal |
+| `salary` | Integer | 31.867 - 333.046 | Gaji pekerjaan dalam ribuan unit mata uang (misalnya Rp 31.867 sampai Rp 333.046) |
 
-### Categorical Features
+### Input Features
 
 | Column | Type | Unique Values | Description | Preprocessing |
-|--------|------|----------------|-------------|---|
-| `job_title` | String | Bervariasi | Posisi/jabatan pekerjaan (e.g., Data Scientist, Software Engineer) | LabelEncoder |
-| `education` | String | 3-5 | Tingkat pendidikan (e.g., High School, Bachelor, Master, PhD) | LabelEncoder |
-| `remote_status` or `remote_work` | String/Boolean | 2-3 | Status pekerjaan remote (e.g., Remote, On-site, Hybrid) | LabelEncoder |
-| `location` or `city` | String | Bervariasi | Lokasi geografis pekerjaan | LabelEncoder |
+|--------|------|---------------|-------------|---------------|
+| `job_title` | String | 12 | Posisi pekerjaan | LabelEncoder |
+| `experience_years` | Integer | 21 | Jumlah tahun pengalaman kerja | StandardScaler |
+| `education_level` | String | 5 | Tingkat pendidikan | LabelEncoder |
+| `skills_count` | Integer | 19 | Jumlah skills atau kompetensi yang dimiliki | StandardScaler |
+| `industry` | String | 10 | Industri tempat bekerja | LabelEncoder |
+| `company_size` | String | 5 | Ukuran perusahaan | LabelEncoder |
+| `location` | String | 10 | Lokasi pekerjaan atau negara | LabelEncoder |
+| `remote_work` | String | 3 | Status remote: `Hybrid`, `No`, `Yes` | LabelEncoder |
+| `certifications` | Integer | 6 | Jumlah sertifikasi profesional | StandardScaler |
 
-### Numeric Features
+## Categorical Feature Values
 
-| Column | Type | Range | Unit | Description |
-|--------|------|-------|------|-------------|
-| `experience` | Int/Float | 0-50+ | Tahun | Pengalaman kerja dalam tahun |
-| `age` | Int | 18-70+ | Tahun | Usia karyawan |
-| `years_in_current_role` | Int | 0-30+ | Tahun | Lama bekerja di posisi saat ini |
+### `job_title`
+- AI Engineer
+- Data Analyst
+- Frontend Developer
+- Business Analyst
+- Product Manager
+- Backend Developer
+- Machine Learning Engineer
+- DevOps Engineer
+- Software Engineer
+- Cybersecurity Analyst
+- Data Scientist
+- Cloud Engineer
 
-## Data Quality & Preprocessing
+### `education_level`
+- Bachelor
+- PhD
+- High School
+- Diploma
+- Master
 
-### Missing Values Handling
-- **Strategy**: [Drop/Fill/Impute]
-- **Columns affected**: [Sebutkan jika ada]
+### `industry`
+- Healthcare
+- Telecom
+- Media
+- Retail
+- Manufacturing
+- Education
+- Finance
+- Technology
+- Consulting
+- Government
 
-### Outliers
-- **Detection**: Visualisasi dengan boxplot
-- **Handling**: Log transformation pada salary
-- **Method**: IQR method atau statistical bounds
+### `company_size`
+- Medium
+- Small
+- Large
+- Enterprise
+- Startup
 
-### Feature Engineering
-- **Log transformation**: `salary_log = log1p(salary)`
-- **Scaling**: StandardScaler pada numeric features
-  - Mean = 0, Std = 1
-  - Applied AFTER train-test split
+### `location`
+- India
+- Australia
+- Singapore
+- Canada
+- Sweden
+- USA
+- Netherlands
+- Remote
+- Germany
+- UK
 
-### Categorical Encoding
-```python
-LabelEncoder() untuk setiap categorical column
-Mapping disimpan untuk inference later
-```
+### `remote_work`
+- Hybrid
+- No
+- Yes
 
-## Data Statistics
+## Numeric Feature Summary
 
-### Salary Distribution (Original Scale)
-```
-Count:    [N rows]
-Mean:     [Mean value]
-Median:   [Median value]
-Std Dev:  [Standard deviation]
-Min:      [Minimum value]
-Max:      [Maximum value]
-```
+| Column | Type | Min | 25% | Median | 75% | Max |
+|--------|------|-----|-----|--------|-----|-----|
+| `experience_years` | Integer | 1 | 5 | 10 | 15 | 20 |
+| `skills_count` | Integer | 0 | 1 | 4 | 6 | 19 |
+| `certifications` | Integer | 0 | 0 | 1 | 2 | 5 |
+| `salary` | Integer | 31.867 | 119.358 | 143.453 | 169.492 | 333.046 |
 
-### Salary Distribution (Log Scale)
-```
-Lebih normal (closer to Gaussian distribution)
-Reduces impact of extreme values
-```
+> Catatan: semua numeric feature distandarisasi menggunakan `StandardScaler` setelah pemisahan train-test untuk menghindari data leakage.
+
+## Preprocessing Notes
+
+### Cleaning
+- Tidak ada missing values yang perlu ditangani.
+- Data bersih dari nilai null pada semua kolom.
+
+### Encoding
+- Semua kolom kategorikal di-encode dengan `LabelEncoder`.
+- Nilai kategorikal disimpan agar inference konsisten.
+
+### Transformation
+- `salary` ditransformasikan menjadi `salary_log` menggunakan `np.log1p(salary)`.
+- Transformasi ini mengurangi efek outlier dan membuat target lebih mendekati distribusi normal.
+
+### Train-Test Split
+- Data dibagi menjadi 80% training dan 20% testing.
+- `random_state=42` untuk reproduksibilitas.
+
+### Scaling
+- `StandardScaler` digunakan pada fitur numerik:
+  - `experience_years`
+  - `skills_count`
+  - `certifications`
+- Scaling dilakukan setelah train-test split.
 
 ## Data Integrity Checks
 
-### Validation Rules
-- [ ] Salary > 0
-- [ ] Experience >= 0
-- [ ] Age >= 18
-- [ ] No duplicate records
-- [ ] Categorical values dalam whitelist
+- **Tidak ada missing values** di dataset.
+- **Format kolom** konsisten dengan ekspektasi: 4 numeric, 6 categorical.
+- **Range salary** positif, cocok untuk log1p transform.
+- **Jumlah data** besar (250k baris) mendukung model yang stabil.
 
-### Known Issues
-- [Sebutkan jika ada issue yang diketahui]
-- [e.g., Missing values di column X]
-- [e.g., Outliers di education category]
+## Recommended Updates
 
-## Class Imbalance (Jika Applicable)
-- Regression task (tidak ada class imbalance)
-- Salary distribution cenderung skewed (handled dengan log transformation)
-
-## Data Leakage Prevention
-- ✓ Scaling dilakukan setelah train-test split
-- ✓ Target variable tidak digunakan sebagai feature
-- ✓ Temporal ordering (jika ada) dipertahankan
+- Simpan mapping LabelEncoder untuk setiap fitur kategorikal di `models/`.
+- Simpan `StandardScaler` sebagai artifact untuk inference.
+- Catat nilai min/max atau distribusi target untuk monitoring drift.
