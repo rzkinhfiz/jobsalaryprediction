@@ -1,0 +1,26 @@
+{
+  "data": {
+    "raw_path": "data/raw/job_salary_prediction_dataset.csv",
+    "processed_dir": "data/processed"
+  },
+  "model": {
+    "output_dir": "models",
+    "model_filename": "random_forest_salary_model.pkl",
+    "scaler_filename": "scaler.pkl",
+    "feature_scaler_filename": "feature_scaler.pkl",
+    "encoder_filename": "label_encoders.pkl"
+  },
+  "training": {
+    "test_size": 0.2,
+    "random_state": 42,
+    "n_estimators": 100,
+    "max_depth": null
+  },
+  "features": {
+    "target_column": "salary",
+    "log_target_column": "salary_log",
+    "numeric_columns": ["experience_years", "skills_count", "certifications"],
+    "categorical_columns": ["job_title", "education_level", "industry", "company_size", "location", "remote_work"],
+    "scaled_columns": ["job_title", "education_level", "industry", "company_size", "location", "remote_work", "experience_years", "skills_count", "certifications"]
+  }
+}
