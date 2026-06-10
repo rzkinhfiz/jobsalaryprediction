@@ -107,7 +107,7 @@ raw_input = {
 }
 
 salary_prediction = predict_salary(raw_input, artifacts)[0]
-print(f"Prediksi gaji: Rp {salary_prediction:,.0f}")
+print(f"Prediksi gaji: $ {salary_prediction:,.0f}")
 ```
 
 **Detailed usage**: See [docs/USAGE.md](docs/USAGE.md)
